@@ -1,8 +1,14 @@
-modern: *.cpp *.hpp
-	g++ *.cpp -std=c++14 -o modern -Wall -Wextra -Werror -Wpedantic -g
+CXX= g++
+CXXFLAGS= -c -Wall -Wpedantic -Wextra -Werror -g
+STD= -std=c++14
+SOURCES= *.cpp
+OBJECTS= $(SOURCES: .cpp=.o)
 
-modernRelase: *.cpp *.hpp
-	g++ *.cpp -std=c++14 -o $@ -Wall -Wextra -Werror -Wpedantic -O3
+final: $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $@
+
+%.o: %.cpp %.hpp
+	$(CXX) $(STD) $(SOURCES) $(CXXFLAGS) $< -o $@
 
 clean:
-	rm modern
+	rm $(OBJECTS) final
